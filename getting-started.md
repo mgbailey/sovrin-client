@@ -45,7 +45,7 @@ Alice doesn’t realize it, yet, but in order to use this digital transcript she
 
 In normal contexts, managing a self - sovereign identity will require a tool such as a desktop or mobile application. It might be a standalone app, or it might leverage a third party service provider that Sovrin calls an **_agency_**. The Sovrin Foundation publishes reference versions of such tools. Faber College will have studied these requirements and will recommend a **_Sovrin app_** to Alice if she doesn’t already have one; this app will install as part of the workflow from the *Get Transcript* button.
 
-When Alice clicks *Get Transcript*, she will download a file that holds a Sovrin **_link invitation_**. This file, having a.sovrin extension and associated with her Sovrin app, will allow her to establish a secure channel of communication with another party in the Sovrin ecosystem--Faber College.
+When Alice clicks *Get Transcript*, she will download a file that holds a Sovrin **_link invitation_**. This file, having a .sovrin extension and associated with her Sovrin app, will allow her to establish a secure channel of communication with another party in the Sovrin ecosystem--Faber College.
 
 So when Alice clicks *Get Transcript*, she will normally end up installing an app (if needed), launching it, and then being asked by the app whether she wants to accept an invitation to connect with Faber.
 
@@ -57,7 +57,7 @@ You can install a Sovrin test network in one of several ways:
  - **Easiest:** [Create virtual machines](https://github.com/mgbailey/sovrin-environments/blob/updateGettingStarted-mgb/vagrant/training/vb-multi-vm/TestSovrinClusterSetup.md) in your Mac or PC using VirtualBox and Vagrant
  
 **TODO:** Update link
- - **More involved:** Manually setup validator nodes - If you prefer to install Sovrin-Node manually without using virtual machine images, please see the installation instructions for [Linux](https://docs.google.com/document/d/1PX-9VQCC8ULgpU2bofaNLJnMW45JXTFPNPnnBSikcRU/edit#) or [Windows](https://docs.google.com/document/d/1_ba3M4cqLAvha_BLgPp07L2EHLdxqptr_tRW2IUAS0g/edit#heading=h.oe37ssfqfijq).  You will also need to set up a node or nodes to run processes to emulate the required Agents.  This is left as an exercise for you.
+ - **More involved:** Manually setup Validator nodes - If you prefer to install Sovrin-Node manually without using virtual machine images, please see the installation instructions for [Linux](https://docs.google.com/document/d/1PX-9VQCC8ULgpU2bofaNLJnMW45JXTFPNPnnBSikcRU/edit#) or [Windows](https://docs.google.com/document/d/1_ba3M4cqLAvha_BLgPp07L2EHLdxqptr_tRW2IUAS0g/edit#heading=h.oe37ssfqfijq).  You will also need to set up a node or nodes to run processes to emulate the required Agents.  This is left as an exercise for you.
  - **Coming soon:** Use client side docker images to make it easy for you to play with Sovrin. 
  - **Also coming soon:** Create virtual machines in AWS using Vagrant
 
@@ -602,15 +602,15 @@ Try Next:
 She decides to submit.
 
 ```
-ALICE> send proof Job-Application to Acme
+ALICE@test> send proof Job-Application to Acme
+
 Signature accepted.
 
-Response from Acme Corp (451.9 ms):
-    Your claim Job-Application 0.2 has been received and is verified
+Response from Acme Corp (15.98 ms):
+    Your Proof Job-Application 0.2 was received and verified
 
-Response from Acme Corp (311.2 ms):
+Response from Acme Corp (23.95 ms):
     Available Claim(s): Job-Certificate
-
 ```
 
 It will be interesting to see whether Acme accepts this application with the informal first_name not matching the one on her transcript. If Acme is concerned about this discrepancy, it could reach out to Alice and ask about it, using the secure channel that’s now established. Alice could send a photo showing her college ID that lists her name as "Alice (Sally) Gonzales".
@@ -618,22 +618,22 @@ It will be interesting to see whether Acme accepts this application with the inf
 Here, we’ll assume the application is accepted, and Alice ends up getting the job. When Alice inspects her link with Acme a week later, she sees that a new claim is available:
 
 ```
-ALICE> show link Acme
+ALICE@test> show link Acme
 Expanding Acme to "Acme Corp"
-Link 
+Link
     Name: Acme Corp
-    Identifier: cid-2:EigjZrDwLREcX2T7P5zNZwZ6R7wv3GcdaKxAeN7cbqYX
+    Identifier: QANW5P3tjRX8Q8w8iyN9A5
     Trust anchor: Acme Corp (confirmed)
-    Verification key: <same as local identifier>
+    Verification key: ~KdJUJwAq6Wj8To8pJgGHqE
     Signing key: <hidden>
     Target: 7YD5NKn3P4wVJLesAmA1rr7sLPqW9mR1nhFdKD518k21
     Target Verification key: <same as target>
-    Target endpoint: 54.70.102.199:6666
+    Target endpoint: 10.20.30.102:6666
     Invitation nonce: 57fbf9dc8c8e6acde33de98c6d747b28c
     Invitation status: Accepted
     Proof Request(s): Job-Application
     Available Claim(s): Job-Certificate
-    Last synced: a minute ago
+    Last synced: 11 minutes ago
 
 Try Next:
     show claim "Job-Certificate"
@@ -647,7 +647,7 @@ Try Next:
 Now that Alice has a job, she’d like to apply for a loan. That will require proof of employment. She can get this from the Job-Certificate claim offered by Acme. Alice goes through a familiar sequence of interactions. First she inspects the claim:
 
 ```
-ALICE> show claim Job-Certificate
+ALICE@test> show claim Job-Certificate
 Found claim Job-Certificate in link Acme Corp.
 Status: available(not yet issued)
 Name: Job-Certificate
@@ -666,41 +666,35 @@ Try Next:
 Next, she requests it:
 
 ```
-ALICE> request claim Job-Certificate
+ALICE@test> request claim Job-Certificate
 Found claim Job-Certificate in link Acme Corp
-Getting Keys for the Schema from Sovrin
 Requesting claim Job-Certificate from Acme Corp...
 
 Signature accepted.
 
-Response from Acme Corp (55.17 ms):
+Response from Acme Corp (11.48 ms):
     Received claim "Job-Certificate".
 ```
 
 The Job-Certificate has been issued, and she now has it in her possession.
 
 ```
-ALICE> show claim Job-Certificate
-Found claim Job-Certificate in link Acme Corp.
-Status: issued 2016-08-15
+ALICE@test> show claim Job-Certificate
+Found claim Job-Certificate in link Acme Corp
+Status: 2017-05-01 16:53:53.742695
 Name: Job-Certificate
-Version: 0.1
+Version: 0.2
 Attributes:
     first_name: Alice
     last_name: Garcia
-    employement_status: Permanent
+    employee_status: Permanent
     experience: 3 years
     salary_bracket: between $50,000 to $100,000
 ```
 
 She can use it when she applies for her loan, in much the same way that she used her transcript when applying for a job.
 
-There is a disadvantage in this approach to data sharing, though--it may disclose more data than what is strictly necessary. If all Alice needs to do is provide proof of employment, this can be done with an anonymous credential instead. Anonymous credentials may prove certain predicates without disclosing actual values (e.g., Alice is employed full-time, with a salary greater than X--but how much her salary is, and what her hire date is, remain hidden).
-
-Support
-for anonymous credentials is at a late alpha stage on Sovrin right now. We’ll
-circle back and update this guide when we reach beta.
-
+There is a disadvantage in this approach to data sharing, though--it may disclose more data than what is strictly necessary. If all Alice needs to do is provide proof of employment, this can be done with an anonymous credential instead. Anonymous credentials may prove certain predicates without disclosing actual values (e.g., Alice is employed full-time, with a salary greater than X--but how much her salary is, and what her hire date is, remain hidden).  A compound proof can be created, drawing from claims from both Faber College and Acme Corp, that discloses only what is necessary.
 
 Alice now loads Thrift Bank's loan application link:
 ```
@@ -724,14 +718,14 @@ Attempting to sync...
 
 Synchronizing...
     Link Thrift Bank synced
-
-Pinging target endpoint: ('54.70.102.199', 7777)
-    Ping sent.
-    Pong received.
+Accepting invitation with nonce 77fbf9dc8c8e6acde33de98c6d747b28c from id NyvGP1B1RQ14wyUHAbVdNh
+nLkB5S looking for Thrift Bank at 10.20.30.103:7777
+nLkB5S pinged Thrift Bank at HA(host='0.0.0.0', port=6002)
+nLkB5S got pong from Thrift Bank
 
 Signature accepted.
 
-Response from Thrift Bank (842.49 ms):
+Response from Thrift Bank (1.59 ms):
     Trust established.
     Identifier created in Sovrin.
 
@@ -743,6 +737,8 @@ Try Next:
     send proof "Loan-Application-Basic" to "Thrift Bank"
     show proof request "Loan-Application-KYC"
     send proof "Loan-Application-KYC" to "Thrift Bank"
+    show proof request "Name-Proof"
+    send proof "Name-Proof" to "Thrift Bank"
 ```
 
 Alice checks to see what the proof request "Loan-Application-Basic" looks like:
@@ -753,30 +749,24 @@ Status: Requested
 Name: Loan-Application-Basic
 Version: 0.1
 Attributes:
-    salary_bracket: between $50,000 to $100,000
-    employee_status: Permanent
-Verifiable Attributes:
-    salary_bracket
-    employee_status
-
+    salary_bracket (V): between $50,000 to $100,000
+    employee_status (V): Permanent
 
 The Proof is constructed from the following claims:
 
     Claim (Job-Certificate v0.2 from Acme Corp)
-        last_name: Garcia (verifiable)
-        salary_bracket: between $50,000 to $100,000 (verifiable)
-        employee_status: Permanent (verifiable)
-        experience: 3 years (verifiable)
-        first_name: Alice (verifiable)
+          first_name: Alice
+          last_name: Garcia
+        * employee_status: Permanent
+          experience: 3 years
+        * salary_bracket: between $50,000 to $100,000
 
 Try Next:
     set <attr-name> to <attr-value>
-    send proof Loan-Application-Basic to Thrift Bank
+    send proof "Loan-Application-Basic" to "Thrift Bank"
 ```
 
-Alice sends just the "Loan-Application-Basic"
-proof to the bank. This allows her to minimize the PII that she has to share
-when all she's trying to do right now is prove basic eligibility.
+Alice sends just the "Loan-Application-Basic" proof to the bank. This allows her to minimize the PII that she has to share when all she's trying to do right now is prove basic eligibility.
 
 ```
 ALICE@test> send proof Loan-Application-Basic to Thrift Bank
@@ -799,35 +789,32 @@ Status: Requested
 Name: Loan-Application-KYC
 Version: 0.1
 Attributes:
-    first_name: Alice
-    last_name: Garcia
-    ssn: 123-45-6789
-Verifiable Attributes:
-    first_name
-    last_name
-    ssn
-
+    [2] first_name (V): Alice
+    [2] last_name (V): Garcia
+    [1] ssn (V): 123-45-6789
 
 The Proof is constructed from the following claims:
 
-    Claim (Transcript v1.2 from Faber College)
-        degree: Bachelor of Science, Marketing (verifiable)
-        student_name: Alice Garcia (verifiable)
-        year: 2015 (verifiable)
-        ssn: 123-45-6789 (verifiable)
-        status: graduated (verifiable)
+    Claim [1] (Transcript v1.2 from Faber College)
+          student_name: Alice Garcia
+        * ssn: 123-45-6789
+          degree: Bachelor of Science, Marketing
+          year: 2015
+          status: graduated
 
-    Claim (Job-Certificate v0.2 from Acme Corp)
-        last_name: Garcia (verifiable)
-        salary_bracket: between $50,000 to $100,000 (verifiable)
-        employee_status: Permanent (verifiable)
-        experience: 3 years (verifiable)
-        first_name: Alice (verifiable)
+    Claim [2] (Job-Certificate v0.2 from Acme Corp)
+        * first_name: Alice
+        * last_name: Garcia
+          employee_status: Permanent
+          experience: 3 years
+          salary_bracket: between $50,000 to $100,000
 
 Try Next:
     set <attr-name> to <attr-value>
-    send proof Loan-Application-KYC to Thrift Bank
+    send proof "Loan-Application-KYC" to "Thrift Bank"
 ```
+
+**TODO:** Examine validated attributes vs. non-validated
 
 Alice now sends "Loan-Application-KYC" proof to the bank: 
 ```
