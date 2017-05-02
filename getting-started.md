@@ -710,7 +710,7 @@ Try Next:
 Alice accepts the loan application link:
 
 ```
-ALICE@test> accept invitation from thrift
+ALICE@test> accept invitation from Thrift
 Expanding thrift to "Thrift Bank"
 Invitation not yet verified.
 Link not yet synchronized.
