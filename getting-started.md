@@ -814,8 +814,6 @@ Try Next:
     send proof "Loan-Application-KYC" to "Thrift Bank"
 ```
 
-**TODO:** Examine validated attributes vs. non-validated
-
 Alice now sends "Loan-Application-KYC" proof to the bank: 
 ```
 ALICE@test> send proof Loan-Application-KYC to Thrift Bank
