@@ -54,51 +54,22 @@ For this guide, however, we’ll be using a command - line interface instead of 
 ## Install Sovrin
 You can install a Sovrin test network in one of several ways:
 
- - **Easiest:** [Create virtual machines](https://github.com/mgbailey/sovrin-environments/blob/updateGettingStarted-mgb/vagrant/training/vb-multi-vm/TestSovrinClusterSetup.md) in your Mac or PC using VirtualBox and Vagrant
- 
-**TODO:** Update link
- - **More involved:** Manually setup Validator nodes - If you prefer to install Sovrin-Node manually without using virtual machine images, please see the installation instructions for [Linux](https://docs.google.com/document/d/1PX-9VQCC8ULgpU2bofaNLJnMW45JXTFPNPnnBSikcRU/edit#) or [Windows](https://docs.google.com/document/d/1_ba3M4cqLAvha_BLgPp07L2EHLdxqptr_tRW2IUAS0g/edit#heading=h.oe37ssfqfijq).  You will also need to set up a node or nodes to run processes to emulate the required Agents.  This is left as an exercise for you.
+ - **Automated VM Creation** [Create virtual machines](https://github.com/evernym/sovrin-environments/blob/master/vagrant/training/vb-multi-vm/TestSovrinClusterSetup.md) in your Mac or PC using VirtualBox and Vagrant
+ - **Manually setup Validator nodes** - If you prefer to install Sovrin-Node manually without using virtual machine images, please see the installation instructions for [Linux](https://docs.google.com/document/d/1PX-9VQCC8ULgpU2bofaNLJnMW45JXTFPNPnnBSikcRU/edit#) or [Windows](https://docs.google.com/document/d/1_ba3M4cqLAvha_BLgPp07L2EHLdxqptr_tRW2IUAS0g/edit#heading=h.oe37ssfqfijq).  You will also need to set up a node or nodes to run processes to emulate the required Agents.  This is left as an exercise for you.
+ - **Processes in Local Machine** [Simulate a Sovrin Validator cluster and agents]() in processes spawned using scripts run from a Python interactive console
  - **Coming soon:** Use client side docker images to make it easy for you to play with Sovrin. 
  - **Also coming soon:** Create virtual machines in AWS using Vagrant
 
-To proceed past this point, you should have a test Sovrin Validator network running, and you should have an Agent node or nodes running with the "Faber College", "Acme Corp", and "Thrift Bank" Agents.  If you have been following [Setting Up a Test Sovrin Network in VMs](https://github.com/mgbailey/sovrin-environments/blob/updateGettingStarted-mgb/vagrant/training/vb-multi-vm/TestSovrinClusterSetup.md) you will have a fourth Agent node that you can use as a CLI client instead of an Agent (the necessary software is already installed on it).  If you don't have such a node with the Sovrin software already installed on it, you can do the following in an available system:
+To proceed past this point, you should have a test Sovrin Validator cluster running, either in separate nodes (VMs), or simulated by processes. You should also have Agent nodes or processes running with the "Faber College", "Acme Corp", and "Thrift Bank" Agents.  You should also have a CLI client which gives you a command - line interface(CLI) to Sovrin. We are going to use that CLI to explore what Sovrin can do. (Sovrin also has a programmatic API, but it is not yet fully formalized, and this version of the guide doesn’t document it. See the [Sovrin roadmap](https://github.com/sovrin-foundation/sovrin/wiki/Roadmap).)
 
-**TODO:** Update link
-```sh
-$ pip install -U --no-cache-dir sovrin-client
-```
-
-If you get any error, check out the info about [prerequisites](https://docs.google.com/document/d/1CyggP4nNPyx4SELNZEc2FOeln6G0F22B37cAVtB_FBM/edit); there are a few dominoes you might have to line up.
-
-The install puts some python modules on your system. Most importantly, it gives you a command - line interface(CLI) to Sovrin. We are going to use that CLI to explore what Sovrin can do. (Sovrin also has a programmatic API, but it is not yet fully formalized, and this version of the guide doesn’t document it. See the [Sovrin roadmap](https://github.com/sovrin-foundation/sovrin/wiki/Roadmap).)
-
-**Run the Sovrin CLI**
-
-Type this command in the CLI client node:
+##Using the Sovrin CLI
+After completing the preceeding, you should have a terminal with a Sovrin client CLI prompt:
 
 ```
-$ sovrin
-```
-
-You should see an interactive prompt, like this:
-
-```
-Loading module /usr/local/lib/python3.5/dist-packages/config/config-crypto-example1.py
-Module loaded.
-
-Sovrin-CLI (c) 2017 Evernym, Inc.
-Node registry loaded.
-    Node1: 10.20.30.201:9701
-    Node2: 10.20.30.202:9703
-    Node3: 10.20.30.203:9705
-    Node4: 10.20.30.204:9707
-Type 'help' for more information.
-Running Sovrin 0.3.15
-
 sovrin>
 ```
 
-We can play the role of multiple **_identity owners_** (a person like Alice, an organization like Faber College, or an IoT - style thing; these are often called "principals" in security circles). To make it easy to keep track of which identity owner we’re representing in a given window, let’s change the prompt:
+The CLI could play the role of multiple **_identity owners_** (a person like Alice, an organization like Faber College, or an IoT - style thing; these are often called "principals" in security circles). In this guide we will just be Alice but to keep things clear and explore functionality let's change the prompt:
 
 ```
 sovrin> prompt ALICE
