@@ -17,7 +17,7 @@
 * [Appendix](#appendix)
   * [Faber College Configures Transcripts](#faber-college-configures-transcripts)
   * [Acme Corp Defines a Job-Application](#acme-corp-defines-a-job-application)
-  
+
 ## What Sovrin is, and Why it Matters
 
 Sovrin is a software ecosystem for private, secure, and powerful identity. It puts people — not the organizations that traditionally centralize identity — in charge of decisions about their own privacy and disclosure. This enables all kinds of rich innovation: link contracts, revocation, novel payment workflows, asset and document management features, creative forms of escrow, curated reputation, integrations with other cool technologies, and so on.
@@ -56,11 +56,11 @@ You can install a Sovrin test network in one of several ways:
 
  - **Automated VM Creation** [Create virtual machines](https://github.com/evernym/sovrin-environments/blob/master/vagrant/training/vb-multi-vm/TestSovrinClusterSetup.md) in your Mac or PC using VirtualBox and Vagrant
  - **Manually setup Validator nodes** - If you prefer to install Sovrin-Node manually without using virtual machine images, please see the installation instructions for [Linux](https://docs.google.com/document/d/1PX-9VQCC8ULgpU2bofaNLJnMW45JXTFPNPnnBSikcRU/edit#) or [Windows](https://docs.google.com/document/d/1_ba3M4cqLAvha_BLgPp07L2EHLdxqptr_tRW2IUAS0g/edit#heading=h.oe37ssfqfijq).  You will also need to set up a node or nodes to run processes to emulate the required Agents.  This is left as an exercise for you.
- - **Processes in Local Machine** [Simulate a Sovrin Validator cluster and agents]() in processes spawned using scripts run from a Python interactive console
- - **Coming soon:** Use client side docker images to make it easy for you to play with Sovrin. 
+ - **Simulation from Python console** [Simulate a Sovrin Validator cluster and agents](cluster-simulation.md) in an event loop.  Similar to what the devs do for testing.
+ - **Coming soon:** Use client side docker images to make it easy for you to play with Sovrin.
  - **Also coming soon:** Create virtual machines in AWS using Vagrant
 
-To proceed past this point, you should have a test Sovrin Validator cluster running, either in separate nodes (VMs), or simulated by processes. You should also have Agent nodes or processes running with the "Faber College", "Acme Corp", and "Thrift Bank" Agents.  You should also have a CLI client which gives you a command - line interface(CLI) to Sovrin. We are going to use that CLI to explore what Sovrin can do. (Sovrin also has a programmatic API, but it is not yet fully formalized, and this version of the guide doesn’t document it. See the [Sovrin roadmap](https://github.com/sovrin-foundation/sovrin/wiki/Roadmap).)
+To proceed past this point, you should have a test Sovrin Validator cluster running, either in separate nodes (VMs), or in simulation. You should also have Agent nodes (or a simulation) running with the "Faber College", "Acme Corp", and "Thrift Bank" Agents.  You should also have a CLI client which gives you a command - line interface(CLI) to Sovrin. We are going to use that CLI to explore what Sovrin can do. (Sovrin also has a programmatic API, but it is not yet fully formalized, and this version of the guide doesn’t document it. See the [Sovrin roadmap](https://github.com/sovrin-foundation/sovrin/wiki/Roadmap).)
 
 ##Using the Sovrin CLI
 After completing the preceeding, you should have a terminal with a Sovrin client CLI prompt:
@@ -73,14 +73,14 @@ The CLI could play the role of multiple **_identity owners_** (a person like Ali
 
 ```
 sovrin> prompt ALICE
-ALICE> 
+ALICE>
 ```
 The status command gives general information about the state of the CLI. Alice tries it:
 
 ```
 ALICE> status
 Not connected to Sovrin network. Please connect first.
- 
+
 Usage:
     connect(test | live)
 ```
@@ -186,7 +186,7 @@ In this case, the creator of the Sovrin identity record (called a trust anchor) 
 - Abbreviated. In this case, there is a verkey starting with a tilde '~' followed by 22 or 23 characters.
 The tilde indicates that the DID itself represents the first 16 bytes of the verkey, and the string following the tilde represents the second 16 bytes of the verkey, both using base58Check encoding.
 - Full. In this case, there is a full 44 character verkey, representing a base58Check encoding of all 32 bytes of a Ed25519 verification key
- 
+
 In the current guide Abbreviated key will be created and used by Alice (you will notice `~` prefix for verification key in the guide).
 
 The key that Alice uses to interact with Faber can change if she revokes or rotates it, so accepting this invitation and activating this link doesn’t lock Alice in to permanent use of this key. Key management events are discoverable in the Sovrin ledger by parties such as Faber College; we’ll touch on that later in the guide.
@@ -295,7 +295,7 @@ Once the link is accepted and synchronized, Alice inspects it again.
 ```
 ALICE@test> show link Faber
 Expanding Faber to "Faber College"
-Link 
+Link
     Name: Faber College
     Identifier: LZ46KqKd1VrNFjXuVFUSY9
     Trust anchor: Faber College (confirmed)
@@ -750,7 +750,7 @@ Response from Thrift Bank (479.17 ms):
     Loan eligibility criteria satisfied, please send another proof 'Loan-Application-KYC'
 ```
 
-Alice now checks the second proof request where she needs to share her 
+Alice now checks the second proof request where she needs to share her
 personal information with bank.
 
 ```
@@ -785,7 +785,7 @@ Try Next:
     send proof "Loan-Application-KYC" to "Thrift Bank"
 ```
 
-Alice now sends "Loan-Application-KYC" proof to the bank: 
+Alice now sends "Loan-Application-KYC" proof to the bank:
 ```
 ALICE@test> send proof Loan-Application-KYC to Thrift Bank
 
@@ -804,7 +804,7 @@ Response from Thrift Bank (69.9 ms):
 The following operations show how Transcripts are defined on the ledger, such that they can later be issued with reference to a known schema.
 ```
 faber> use Schema-Keyring
- 
+
 faber> new schema
 name = "Transcript"
 version = "1.2"
@@ -817,10 +817,10 @@ attributes = {
 }
 
 Schema Transcript v1 .2 added to Schema-Keyring
- 
+
 faber> add keys of type CL for schema Transcript version 1.2
 Keys added
- 
+
 faber> show pending 2 pending
 ...
 ...
@@ -859,7 +859,7 @@ attributes = {
 }
 
 Schema Job-Application v0 .1 added
- 
+
 acme> show pending 1 pending
 ...
 acme> submit pending Submitting 2 transactions...
