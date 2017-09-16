@@ -82,7 +82,7 @@ Next, we will create a new empty keyring for Alice. Creating a new empty keyring
 It's a good habit to get into. Go ahead and create the new keyring now:
 
 ```
-new keyring Alice
+ALICE> new wallet Alice
 ```
 
 
@@ -102,7 +102,7 @@ Alice might also try the 'help' command to see a list of the other commands that
 To make this guide more convenient, the sovrin CLI package installs a sample Faber College invitation in a file at /<CLI_ROOT>/sample/faber-invitation.sovrin. We’re going to use this file as if it had been downloaded from Faber. (In normal usage, Alice’s Sovrin app would be doing a lot of these steps automatically.)
 
 ```
-ALICE> show sample/faber-invitation.sovrin
+ALICE> show sample/faber-request.sovrin
 {
   "link-invitation": {
     "name": "Faber College",
@@ -113,34 +113,34 @@ ALICE> show sample/faber-invitation.sovrin
 }
 
 Try Next:
-    load sample/faber-invitation.sovrin
+    load sample/faber-request.sovrin
 ```
 
 Alice sees a bunch of data that looks interesting but mysterious. She wants Sovrin to tell her if the link invitation file is well formed and has something useful in it, so she uses the 'load' command:
 
 ```
-ALICE> load sample/faber-invitation.sovrin
+ALICE> load sample/faber-request.sovrin
 New keyring Default created
 Active keyring set to "Default"
 1 link invitation found for Faber College.
 Creating Link for Faber College.
 
 Try Next:
-    show link "Faber College"
-    accept invitation from "Faber College"
+    show connection "Faber College"
+    accept request from "Faber College"
 ```
 
 This causes the client to parse and validate the file in addition to displaying more reader friendly text. Alice would now like to know what’s entailed in accepting the invitation.  She types:
 
 ```
-ALICE> show link Faber
+ALICE> show connection Faber
 ```
 
 Unlike the 'show' command for files, this one asks Sovrin to show a link. More details are exposed:
 
 ```
 Expanding Faber to "Faber College"
-Link (not yet accepted)
+Connection (not yet accepted)
     Name: Faber College
     Identifier: not yet assigned
     Trust anchor: Faber College (not yet written to Sovrin)
@@ -155,7 +155,7 @@ Link (not yet accepted)
 
 Try Next:
     sync "Faber College"
-    accept invitation from "Faber College"
+    accept request from "Faber College"
 ```
 
 You’ll see the link contains several pieces of information. Let’s examine them one at a time.
@@ -249,7 +249,7 @@ A link stores when it was last synchronized with the Sovrin network, so we can t
 Alice _attempts_ to accept the invitation from Faber College.
 
 ```
-ALICE> accept invitation from Faber
+ALICE> accept request from Faber
 Expanding Faber to "Faber College"
 Invitation not yet verified.
 Link not yet synchronized.
@@ -273,7 +273,7 @@ Connected to test.
 Alice tries again to accept the invitation from Faber College. This time she succeeds.
 
 ```
-ALICE@test> accept invitation from Faber
+ALICE@test> accept request from Faber
 Expanding Faber to "Faber College"
 Invitation not yet verified.
 Link not yet synchronized.
@@ -309,7 +309,7 @@ Accepting an invitation takes the nonce that Faber College provided, and signs i
 Once the link is accepted and synchronized, Alice inspects it again.
 
 ```
-ALICE@test> show link Faber
+ALICE@test> show connection Faber
 Expanding Faber to "Faber College"
 Link
     Name: Faber College
@@ -464,7 +464,7 @@ Try Next:
     accept invitation from "Acme Corp"
 
 
-ALICE@test> show link Acme
+ALICE@test> show connection Acme
 Expanding Acme to "Acme Corp"
 Link (not yet accepted)
     Name: Acme Corp
@@ -482,10 +482,10 @@ Link (not yet accepted)
 
 Try Next:
     sync "Acme Corp"
-    accept invitation from "Acme Corp"
+    accept request from "Acme Corp"
 
 
-ALICE@test> accept invitation from Acme
+ALICE@test> accept request from Acme
 Expanding Acme to "Acme Corp"
 Invitation not yet verified.
 Link not yet synchronized.
@@ -607,7 +607,7 @@ It will be interesting to see whether Acme accepts this application with the inf
 Here, we’ll assume the application is accepted, and Alice ends up getting the job. When Alice inspects her link with Acme a week later, she sees that a new claim is available:
 
 ```
-ALICE@test> show link Acme
+ALICE@test> show connection Acme
 Expanding Acme to "Acme Corp"
 Link
     Name: Acme Corp
@@ -693,13 +693,13 @@ Creating Link for Thrift Bank.
 
 Try Next:
     show link "Thrift Bank"
-    accept invitation from "Thrift Bank"
+    accept request from "Thrift Bank"
 ```
 
 Alice accepts the loan application link:
 
 ```
-ALICE@test> accept invitation from Thrift
+ALICE@test> accept request from Thrift
 Expanding thrift to "Thrift Bank"
 Invitation not yet verified.
 Link not yet synchronized.
